@@ -80,3 +80,28 @@ body {
     margin: 0;
     margin-top: -20px;
 }
+
+#korean-word {
+    font-size: 1.5rem;
+    color: #fff;
+    position: relative;
+    cursor: pointer;
+}
+
+#korean-word::after {
+    content: attr(data-definition);
+    position: absolute;
+    top: 100%;
+    left: 0;
+    color: #ffc107;
+    font-size: 1rem;
+    padding-top: 0.5rem;
+    white-space: nowrap;
+    opacity: 0;
+    transition: opacity 0.3s;
+    pointer-events: none;
+}
+
+#korean-word:hover::after {
+    opacity: 1;
+}

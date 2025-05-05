@@ -1,6 +1,8 @@
 const imgAuthor = document.getElementById("img-author");
 const currentTime = document.getElementById("current-time");
 const weatherDiv = document.getElementById("weather-div");
+const API_KEY = "05623374BED888DBCD8185F279824576";
+const wordContainer = document.getElementById("korean-word");
 
 function updateTime() {
     const date = new Date();
@@ -13,6 +15,54 @@ function updateTime() {
 
 updateTime();
 setInterval(updateTime, 1000);
+
+function getRandomWord() {
+    return fetch ("./data/ko_50k.txt")
+        .then (res => res.text())
+        .then (text => {
+            const lines = text.trim().split("\n");
+            const words = lines.map(line => line.split(" ")[0]);
+            const randomWord = words[Math.floor(Math.random() * words.length)];
+            return randomWord
+        });
+};
+
+function fetchDefinition(word) {
+    const url = `https://krdict.korean.go.kr/api/search?key=${API_KEY}&q=${encodeURIComponent(word)}`;
+
+    return fetch (url)
+        .then (res => res.text())
+        .then (str => {
+            const parser = new DOMParser();
+            const xml = parser.parseFromString(str, "application/xml");
+            const definitionNode = xml.querySelector("definition");
+
+            return definitionNode ? definitionNode.textContent : "No definition found.";
+        });
+};
+
+function displayWord() {
+    getRandomWord()
+        .then (word => {
+            fetchDefinition(word)
+                .then (definition => {
+                    wordContainer.textContent = word;
+                    wordContainer.setAttribute("data-definition", definition);
+                })
+                .catch(err => {
+                    console.err("Error fetching definition:", err);
+                    wordContainer.textContent = word;
+                    wordContainer.setAttribute("data-definition", "Definition not available.");
+                });
+        })
+        .catch(err => {
+            console.error("Error fetching word:", err);
+            wordContainer.textContent = "Error loading word.";
+            wordContainer.setAttribute("data-definition", "");
+        });
+};
+
+displayWord();
 
 fetch ("https://apis.scrimba.com/unsplash/photos/random?orientation=landscape&query=seoul")
     .then (res => res.json())
@@ -34,16 +84,6 @@ fetch ("https://apis.scrimba.com/unsplash/photos/random?orientation=landscape&qu
             <p>Credit: @shining.shot</p>
         `;
     });
-
-fetch ("https://krdict.korean.go.kr/api/search")
-    .then (res => {
-        if (!res.ok) throw Error("Data not available");
-        return res.json();
-    })
-    .then (data => {
-        
-    })
-    .catch (err => console.error(err));
 
 navigator.geolocation.getCurrentPosition((position) => {
     fetch (`https://apis.scrimba.com/openweathermap/data/2.5/weather?lat=${position.coords.latitude}&lon=${position.coords.longitude}&units=metric`)
