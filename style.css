@@ -15,7 +15,7 @@ body {
     background-size: cover;
     color: white;
     font-family: "Noto Sans KR", sans-serif;
-    text-shadow: 3px 5px 2px #474747;
+    text-shadow: 0 0 1rem #000;
 }
 
 .dashboard {
