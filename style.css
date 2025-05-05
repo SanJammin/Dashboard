@@ -55,3 +55,28 @@ body {
     align-self: end;
     justify-self: start;
 }
+
+.weather-styling {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    align-self: flex-start;
+}
+
+.weather-styling > img {
+    height: 65%;
+    margin: 0;
+}
+
+.weather-temp {
+    margin: 0;
+    font-size: 1.5rem;
+}
+
+.weather-city {
+    width: 100%;
+    text-align: right;
+    margin: 0;
+    margin-top: -20px;
+}
