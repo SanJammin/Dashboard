@@ -47,6 +47,7 @@ body {
     grid-area: center;
     align-self: center;
     justify-self: center;
+    font-size: 3rem;
 }
 
 .bottom-left {

@@ -1,4 +1,17 @@
 const imgAuthor = document.getElementById("img-author");
+const currentTime = document.getElementById("current-time");
+
+function updateTime() {
+    const date = new Date();
+    const hours = date.getHours().toString().padStart(2, "0");
+    const minutes = date.getMinutes().toString().padStart(2, "0");
+    currentTime.innerHTML = `
+    <h1>${hours}:${minutes}</h1>
+    `
+};
+
+updateTime();
+setInterval(updateTime, 1000);
 
 fetch ("https://apis.scrimba.com/unsplash/photos/random?orientation=landscape&query=seoul")
     .then (res => res.json())
