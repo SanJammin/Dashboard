@@ -19,22 +19,23 @@ export function fetchXMLDefinition(word, API_KEY) {
         });
 }
 
-export async function translateWord(word) {
+export async function translateWord(word, AZURE_KEY, AZURE_REGION, AZURE_ENDPOINT) {
+    const url = `${AZURE_ENDPOINT}/translate?api-version=3.0&from=ko&to=en`;
+
     try {
-        const res = await fetch("https://libretranslate.com/translate", {
+        const res = await fetch(url, {
             method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-                q: word,
-                source: "ko",
-                target: "en",
-                format: "text"
-            })
+            headers: {
+                "Ocp-Apim-Subscription-Key": AZURE_KEY,
+                "Ocp-Apim-Subscription-Region": AZURE_REGION,
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify([{ Text: word }])
         });
 
-        if (!res.ok) throw new Error("Translation failed.");
+        if (!res.ok) throw new Error(`Translation failed with status ${res.status}`);
         const data = await res.json();
-        return data.translatedText;
+        return data[0]?.translations[0].text || "Translation unavailable";
     } catch (err) {
         console.error("Translate Error:", err);
         return "Translation unavailable";

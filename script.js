@@ -1,10 +1,14 @@
 import { getRandomWordFromFile, fetchXMLDefinition, translateWord } from "./utils.js";
+import { CONFIG } from "./config.js";
 
 const imgAuthor = document.getElementById("img-author");
 const currentTime = document.getElementById("current-time");
 const weatherDiv = document.getElementById("weather-div");
 const wordContainer = document.getElementById("korean-word");
-const API_KEY = "05623374BED888DBCD8185F279824576";
+
+// API Consts
+const { API_KEY, AZURE_KEY, AZURE_REGION, AZURE_ENDPOINT } = CONFIG;
+
 
 function updateTime() {
     const date = new Date();
@@ -19,7 +23,7 @@ setInterval(updateTime, 1000);
 async function displayWord() {
     try {
         const word = await getRandomWordFromFile();
-        const translation = await translateWord(word);
+        const translation = await translateWord(word, AZURE_KEY, AZURE_REGION, AZURE_ENDPOINT);
         const definition = await fetchXMLDefinition(word, API_KEY);
 
         wordContainer.innerHTML = `
