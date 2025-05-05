@@ -1,3 +1,4 @@
+/* Reset and Base Styles */
 * {
     box-sizing: border-box;
 }
@@ -5,61 +6,41 @@
 html, body {
     margin: 0;
     padding: 0;
-}
-
-body {
-    background: no-repeat center center fixed;
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-size: cover;
     color: white;
     font-family: "Noto Sans KR", sans-serif;
     text-shadow: 0 0 1rem #000;
 }
 
+body {
+    background: no-repeat center center fixed;
+    background-size: cover;
+}
+
+/* Grid Layout */
 .dashboard {
     display: grid;
     height: 100vh;
+    gap: 1rem;
+    padding: 1rem;
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: repeat(3, 1fr);
     grid-template-areas: 
         "top-left . top-right"
         ". center ."
         "bottom-left . .";
-    gap: 1rem;
-    padding: 1rem;
 }
 
-.top-left {
-    grid-area: top-left;
-    align-self: start;
-    justify-self: start;
-}
+/* Grid Area Positions */
+.top-left { grid-area: top-left; align-self: start; justify-self: start; }
+.top-right { grid-area: top-right; align-self: start; justify-self: end; }
+.center { grid-area: center; align-self: center; justify-self: center; font-size: 3rem; }
+.bottom-left { grid-area: bottom-left; align-self: end; justify-self: start; }
 
-.top-right {
-    grid-area: top-right;
-    align-self: start;
-    justify-self: end;
-}
-
-.center {
-    grid-area: center;
-    align-self: center;
-    justify-self: center;
-    font-size: 3rem;
-}
-
-.bottom-left {
-    grid-area: bottom-left;
-    align-self: end;
-    justify-self: start;
-}
-
+/* Weather Styling */
 .weather-styling {
     display: flex;
-    align-items: center;
     flex-wrap: wrap;
+    align-items: center;
     justify-content: flex-end;
     align-self: flex-start;
 }
@@ -77,31 +58,32 @@ body {
 .weather-city {
     width: 100%;
     text-align: right;
-    margin: 0;
-    margin-top: -20px;
+    margin: -20px 0 0 0;
 }
 
+/* Korean Word Hover Effect */
 #korean-word {
     font-size: 1.5rem;
-    color: #fff;
     position: relative;
     cursor: pointer;
 }
 
-#korean-word::after {
-    content: attr(data-definition);
-    position: absolute;
-    top: 100%;
-    left: 0;
-    color: #ffc107;
-    font-size: 1rem;
-    padding-top: 0.5rem;
-    white-space: nowrap;
-    opacity: 0;
-    transition: opacity 0.3s;
-    pointer-events: none;
+#korean-word span.korean {
+    display: inline;
+    transition: opacity 0.3s ease-in-out;
 }
 
-#korean-word:hover::after {
-    opacity: 1;
+#korean-word span.english-hover {
+    display: none;
+    color: #ffc107;
+    font-weight: 500;
+    transition: opacity 0.3s ease-in-out;
+}
+
+#korean-word:hover span.korean {
+    display: none;
+}
+
+#korean-word:hover span.english-hover {
+    display: inline;
 }
