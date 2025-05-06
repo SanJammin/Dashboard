@@ -36,6 +36,14 @@ body {
 .center { grid-area: center; align-self: center; justify-self: center; font-size: 3rem; }
 .bottom-left { grid-area: bottom-left; align-self: end; justify-self: start; }
 
+#img-author {
+    font-size: 1.3rem;
+}
+
+#current-time {
+    font-size: 5rem;
+}
+
 /* Weather Styling */
 .weather-styling {
     display: flex;
@@ -56,6 +64,7 @@ body {
     width: 100%;
     text-align: right;
     margin-top: -20px;
+    font-size: 1.2rem;
 }
 
 /* Korean Word Hover Effect */
