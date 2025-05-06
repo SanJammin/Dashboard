@@ -37,7 +37,7 @@ async function displayWord() {
 fetch("https://apis.scrimba.com/unsplash/photos/random?orientation=landscape&query=seoul")
     .then(res => res.json())
     .then(data => {
-        document.body.style.backgroundImage = `url(${data.urls.regular})`;
+        document.body.style.backgroundImage = `url(${data.urls.full})`;
         imgAuthor.innerHTML = `
             <p>Credit: ${data.user.instagram_username ? `@${data.user.instagram_username}` : data.user.name}</p>
         `
